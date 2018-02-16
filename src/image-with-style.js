@@ -70,6 +70,8 @@ rules.imageWithSizeAndAlign = {
     // if any match was found
     if (querystring.length > 0) {
       if (modifiedSrc.indexOf('?') === -1) modifiedSrc += '?'
+      else modifiedSrc += '&'
+
       // append the querystring, remove the last '&'
       modifiedSrc += querystring.substring(0, querystring.length - 1)
     }
