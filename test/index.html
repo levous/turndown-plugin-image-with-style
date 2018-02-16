@@ -24,9 +24,19 @@
   <pre class="expected">![](dir2/whatever.gif)</pre>
 </div>
 
-<div class="case" data-name="img with width and height">
+<div class="case" data-name="img with styled width and height">
   <div class="input"><img src="dir2/whatever.gif" style="border:1px solid #eeeeee; width:101px; height:203px;garbage" /></div>
   <pre class="expected">![](dir2/whatever.gif?width=101px&height=203px)</pre>
+</div>
+
+<div class="case" data-name="img with styled width and height using em">
+  <div class="input"><img src="dir2/whatever.gif" style="border:1px solid #eeeeee;height:2em;width:2.1em;garbage" /></div>
+  <pre class="expected">![](dir2/whatever.gif?width=2.1em&height=2em)</pre>
+</div>
+
+<div class="case" data-name="img with attribute width and height">
+  <div class="input"><img src="dir2/whatever.gif" width="90" height="20" style="border:1px solid #eeeeee; garbage" /></div>
+  <pre class="expected">![](dir2/whatever.gif?width=90&height=20)</pre>
 </div>
 
 <div class="case" data-name="img with float left">
@@ -46,6 +56,6 @@
 
 <!-- /TEST CASES -->
 
-<script src="turndown-plugin-image-style-test.browser.js"></script>
+<script src="-test.browser.js"></script>
 </body>
 </html>
