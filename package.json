@@ -1,0 +1,44 @@
+{
+  "name": "turndown-plugin-image-style",
+  "description": "Turndown plugin to add image align and size extensions.",
+  "version": "1.0.1",
+  "author": "Rusty",
+  "main": "lib/turndown-plugin-image-style.cjs.js",
+  "module": "lib/turndown-plugin-image-style.es.js",
+  "jsnext:main": "lib/turndown-plugin-image-style.es.js",
+  "devDependencies": {
+    "browserify": "^14.5.0",
+    "rollup": "^0.50.0",
+    "standard": "^10.0.3",
+    "turndown": "4.0.1",
+    "turndown-attendant": "0.0.2"
+  },
+  "files": [
+    "lib",
+    "dist"
+  ],
+  "keywords": [
+    "turndown",
+    "turndown-plugin",
+    "html-to-markdown",
+    "html",
+    "markdown",
+    "image-style",
+    "image-align"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/domchristie/turndown-plugin-image-style.git"
+  },
+  "scripts": {
+    "build": "npm run build-cjs && npm run build-es && npm run build-iife && npm run build-test",
+    "build-cjs": "rollup -c config/rollup.config.cjs.js && rollup -c config/rollup.config.browser.cjs.js",
+    "build-es": "rollup -c config/rollup.config.es.js && rollup -c config/rollup.config.browser.es.js",
+    "build-iife": "rollup -c config/rollup.config.iife.js",
+    "build-test": "browserify test/turndown-plugin-image-style-test.js --outfile test/turndown-plugin-image-style-test.browser.js",
+    "prepublish": "npm run build",
+    "test": "npm run build && standard ./src/**/*.js && node test/turndown-plugin-image-style-test.js",
+    "debug-test": "npm run build && node --inspect test/turndown-plugin-image-style-test.js"
+  }
+}
