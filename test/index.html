@@ -59,6 +59,16 @@
   <pre class="expected">![](dir2/whatever.gif?someqs=hello&width=101px&height=203px&align=center)</pre>
 </div>
 
+<div class="case" data-name="img url with width in querystring">
+  <div class="input"><img src="dir2/whatever.gif?width=44&someqs=hello" style="border:1px solid #eeeeee; width:101px; height:203px;garbage;display:block;margin:auto" /></div>
+  <pre class="expected">![](dir2/whatever.gif?someqs=hello&width=101px&height=203px&align=center)</pre>
+</div>
+
+<div class="case" data-name="img url with width in querystring">
+  <div class="input"><img src="dir2/whatever.gif?width=44&someqs=hello" style="border:1px solid #eeeeee; garbage;display:block;margin:auto" /></div>
+  <pre class="expected">![](dir2/whatever.gif?someqs=hello&align=center)</pre>
+</div>
+
 <!-- /TEST CASES -->
 
 <script src="-test.browser.js"></script>

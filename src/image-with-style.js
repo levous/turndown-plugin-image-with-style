@@ -57,6 +57,26 @@ rules.imageWithSizeAndAlign = {
       return val
     }
 
+    const prepareSourceUrl = function(src) {
+      var idxOfQS = src.indexOf('?')
+      var modifiedSrc
+      if (idxOfQS !== -1) {
+        // copy pairs that aren't managed by this module
+        var pairs = src.substring(idxOfQS + 1).split('&')
+        var originalQs = pairs.reduce((qs, pairString) => {
+          var trimmed = pairString.trim()
+          if (trimmed.startsWith('align')) return qs
+          if (trimmed.startsWith('width')) return qs
+          if (trimmed.startsWith('height')) return qs
+          if (qs.length > 0) qs += '&'
+          return qs + trimmed
+        }, '')
+        return src.substring(0, idxOfQS) + '?' + originalQs + '&'
+      }
+      // return original with ?
+      return src + '?'
+    }
+
     var height = attributeOrStyle('height')
     var width = attributeOrStyle('width')
 
@@ -66,15 +86,10 @@ rules.imageWithSizeAndAlign = {
                       (height ? `height=${height}&` : '') +
                       (match.centered ? `align=center&` : '')
 
-    var modifiedSrc = attr.src
-    // if any match was found
-    if (querystring.length > 0) {
-      if (modifiedSrc.indexOf('?') === -1) modifiedSrc += '?'
-      else modifiedSrc += '&'
+    var modifiedSrc = prepareSourceUrl(attr.src) + querystring
 
-      // append the querystring, remove the last '&'
-      modifiedSrc += querystring.substring(0, querystring.length - 1)
-    }
+    // remove the last '&'
+    if (modifiedSrc[modifiedSrc.length - 1] === '&') modifiedSrc = modifiedSrc.substring(0, modifiedSrc.length - 1)
 
     return `![${attr.altText}](${modifiedSrc})`
   }
