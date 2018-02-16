@@ -1,7 +1,7 @@
 {
   "name": "turndown-plugin-image-with-style",
   "description": "Turndown plugin to add image align and size extensions.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "Rusty",
   "main": "lib/turndown-plugin-image-with-style.cjs.js",
   "module": "lib/turndown-plugin-image-with-style.es.js",
