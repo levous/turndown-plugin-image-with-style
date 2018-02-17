@@ -6,7 +6,9 @@ var rules = {}
 //    height: [value]
 //    width: [value]
 //    margin: auto; dislay: block
-// The information will be appended to the src url as originalSrcUrl?align=[left\center|right]&width=value&height=value
+// The information will be included as attributes matching the markdown attr extension
+//   https://github.com/arve0/markdown-it-attrs
+//   example [alt text](someurl.gif){width=200px height=100px margin:auto display:block}
 rules.imageWithSizeAndAlign = {
   regex: {
     height: /height:\s*(\d+(?:\.\d+)?(?:px|em|%){0,1})/i,
@@ -57,41 +59,33 @@ rules.imageWithSizeAndAlign = {
       return val
     }
 
-    const prepareSourceUrl = function(src) {
-      var idxOfQS = src.indexOf('?')
-      var modifiedSrc
-      if (idxOfQS !== -1) {
-        // copy pairs that aren't managed by this module
-        var pairs = src.substring(idxOfQS + 1).split('&')
-        var originalQs = pairs.reduce((qs, pairString) => {
-          var trimmed = pairString.trim()
-          if (trimmed.startsWith('align')) return qs
-          if (trimmed.startsWith('width')) return qs
-          if (trimmed.startsWith('height')) return qs
-          if (qs.length > 0) qs += '&'
-          return qs + trimmed
-        }, '')
-        return src.substring(0, idxOfQS) + '?' + originalQs + '&'
+    const floatStyleString = function (direction) {
+      switch (direction) {
+        case 'left':
+          return 'float:left; margin:0px 1em 1em 0px;'
+        case 'right':
+          return 'float:right; margin:0px 0px 1em 1em;'
+        default:
+          return ''
       }
-      // return original with ?
-      return src + '?'
     }
 
     var height = attributeOrStyle('height')
     var width = attributeOrStyle('width')
 
-    // float and centered will append the same qs key.  If this happens, tough puhtooties.  User error :)
-    var querystring = (match.float ? `align=${match.float[1]}&` : '') +
-                      (width ? `width=${width}&` : '') +
-                      (height ? `height=${height}&` : '') +
-                      (match.centered ? `align=center&` : '')
+    var attrString = (width ? `width=${width} ` : '') +
+                     (height ? `height=${height} ` : '')
+    var styleString = (match.centered ? `display:block; margin:auto; ` : '') +
+                      (match.float ? floatStyleString(match.float[1]) + ' ' : '')
+    if (styleString.length > 1) {
+      // append to attribute string and remove the last ' '
+      attrString += `style="${styleString.substring(0, styleString.length - 1)}" `
+    }
 
-    var modifiedSrc = prepareSourceUrl(attr.src) + querystring
+    // remove the last ' '
+    if (attrString[attrString.length - 1] === ' ') attrString = attrString.substring(0, attrString.length - 1)
 
-    // remove the last '&'
-    if (modifiedSrc[modifiedSrc.length - 1] === '&') modifiedSrc = modifiedSrc.substring(0, modifiedSrc.length - 1)
-
-    return `![${attr.altText}](${modifiedSrc})`
+    return `![${attr.altText}](${attr.src}){${attrString}}`
   }
 }
 

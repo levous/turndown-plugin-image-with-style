@@ -26,48 +26,34 @@
 
 <div class="case" data-name="img with styled width and height">
   <div class="input"><img src="dir2/whatever.gif" style="border:1px solid #eeeeee; width:101px; height:203px;garbage" /></div>
-  <pre class="expected">![](dir2/whatever.gif?width=101px&height=203px)</pre>
+  <pre class="expected">![](dir2/whatever.gif){width=101px height=203px}</pre>
 </div>
 
 <div class="case" data-name="img with styled width and height using em">
   <div class="input"><img src="dir2/whatever.gif" style="border:1px solid #eeeeee;height:2em;width:2.1em;garbage" /></div>
-  <pre class="expected">![](dir2/whatever.gif?width=2.1em&height=2em)</pre>
+  <pre class="expected">![](dir2/whatever.gif){width=2.1em height=2em}</pre>
 </div>
 
 <div class="case" data-name="img with attribute width and height">
   <div class="input"><img src="dir2/whatever.gif" width="90" height="20" style="border:1px solid #eeeeee; garbage" /></div>
-  <pre class="expected">![](dir2/whatever.gif?width=90&height=20)</pre>
+  <pre class="expected">![](dir2/whatever.gif){width=90 height=20}</pre>
 </div>
 
 <div class="case" data-name="img with float left">
   <div class="input"><img src="dir2/whatever.gif" alt="killer" style="border:1px solid #eeeeee;float:left;position:relative" /></div>
-  <pre class="expected">![killer](dir2/whatever.gif?align=left)</pre>
+  <pre class="expected">![killer](dir2/whatever.gif){style="float:left; margin:0px 1em 1em 0px;"}</pre>
 </div>
 
 <div class="case" data-name="img with float right">
-  <div class="input"><img alt="killer" src="dir2/whatever.gif" style="border:1px solid #eeeeee;position:relative;float:right" /></div>
-  <pre class="expected">![killer](dir2/whatever.gif?align=right)</pre>
+  <div class="input"><img alt="killer" src="dir2/whatever.gif" style="border:1px solid #eeeeee;position:relative;float:right;margin: 0px 0px 1em 1em;" /></div>
+  <pre class="expected">![killer](dir2/whatever.gif){style="float:right; margin:0px 0px 1em 1em;"}</pre>
 </div>
 
 <div class="case" data-name="img centered">
   <div class="input"><img alt="killer" src="dir2/whatever.gif" style="border:1px solid #eeeeee;display: block;position:relative;margin:auto" /></div>
-  <pre class="expected">![killer](dir2/whatever.gif?align=center)</pre>
+  <pre class="expected">![killer](dir2/whatever.gif){style="display:block; margin:auto;"}</pre>
 </div>
 
-<div class="case" data-name="img url with querystring">
-  <div class="input"><img src="dir2/whatever.gif?someqs=hello" style="border:1px solid #eeeeee; width:101px; height:203px;garbage;display:block;margin:auto" /></div>
-  <pre class="expected">![](dir2/whatever.gif?someqs=hello&width=101px&height=203px&align=center)</pre>
-</div>
-
-<div class="case" data-name="img url with width in querystring">
-  <div class="input"><img src="dir2/whatever.gif?width=44&someqs=hello" style="border:1px solid #eeeeee; width:101px; height:203px;garbage;display:block;margin:auto" /></div>
-  <pre class="expected">![](dir2/whatever.gif?someqs=hello&width=101px&height=203px&align=center)</pre>
-</div>
-
-<div class="case" data-name="img url with width in querystring">
-  <div class="input"><img src="dir2/whatever.gif?width=44&someqs=hello" style="border:1px solid #eeeeee; garbage;display:block;margin:auto" /></div>
-  <pre class="expected">![](dir2/whatever.gif?someqs=hello&align=center)</pre>
-</div>
 
 <!-- /TEST CASES -->
 

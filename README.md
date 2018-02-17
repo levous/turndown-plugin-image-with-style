@@ -1,6 +1,6 @@
 # turndown-plugin-gfm
 
-A [Turndown](https://github.com/domchristie/turndown) plugin which captures alignment attributes from the style attribute and value from height and width attributes of an img tag and appends a querystring to the image url.  The purpose is to allow alignment while still enforcing the guard rails of converting to markdown.
+A [Turndown](https://github.com/domchristie/turndown) plugin which captures alignment attributes from the style attribute and value from height and width attributes of an img tag adds controlled attributes using the `{attr1=val attr2=another}` pattern.  The purpose is to allow alignment while still enforcing the guard rails of converting to markdown.
 
 ## Installation
 
@@ -26,19 +26,22 @@ var TurndownPluginImageWithStyle = require('turndown-plugin-image-with-style')
 
 var turndownService = new TurndownService()
 turndownService.use(TurndownPluginImageWithStyle)
-var markdown = turndownService.turndown('<strike>Hello world!</strike>')
+var markdown = turndownService.turndown('<img width="400" style="float:left" src="https://http.cat/405" alt="so awesome"/>')
 ```
 
 `turndown-plugin-image-with-style` looks for the size and alignment declarations applied for image alignment and size.  
 Specifically, using [Quill Image Resize Module](https://github.com/kensnyder/quill-image-resize-module) with [Quill Editor](https://quilljs.com), the editor consistently inserts specific style, height and width attributes that can be matched and handled.  
 
 `turndown-plugin-image-with-style` will convert these to:
-- align=[left|center|right]
+- style="float:left; margin:0px 1em 1em 0px;" OR style="float:right; margin:0px 0px 1em 1em;" OR display:block; margin:auto;"
 - width=[value]
 - height=[value]
 
-It's then up to you to process these qs variables from the querystring when converting back to html.  If I find a solution as awesome as downturn for the other direction, I'll open source that and link it as well.
-So for example, if you only wish to convert tables:
+It's then up to you to process these attributes when converting back to html.  
+A handy module is: [markdown-it-attrs](https://github.com/arve0/markdown-it-attrs)
+with [markdown-it](https://github.com/markdown-it/markdown-it)
+
+example:
 
 ```js
 var imageWithStyle = require('turndown-plugin-image-with-style')
