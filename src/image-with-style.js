@@ -73,10 +73,8 @@ rules.imageWithSizeAndAlign = {
     var height = attributeOrStyle('height')
     var width = attributeOrStyle('width')
 
-    var attrString = (width ? `width=${width} ` : '') +
-                     (height ? `height=${height} ` : '')
-    var styleString = (match.centered ? `display:block; margin:auto; ` : '') +
-                      (match.float ? floatStyleString(match.float[1]) + ' ' : '')
+    var attrString = (width ? `width=${width} ` : '') + (height ? `height=${height} ` : '')
+    var styleString = (match.centered ? `display:block; margin:auto; ` : '') + (match.float ? floatStyleString(match.float[1]) + ' ' : '')
     if (styleString.length > 1) {
       // append to attribute string and remove the last ' '
       attrString += `style="${styleString.substring(0, styleString.length - 1)}" `
